@@ -18,6 +18,9 @@ use App\Http\Controllers\User\DashboardController as UserDashboardController;
 */
 
 Route::get('/', [AuthController::class, 'index'])->name('login.index');
+Route::get('/login', function(){
+    return redirect()->route('login.index');
+})->name('login');
 Route::get('/dashboard', [RoutingDashboardController::class, 'index'])->name('dashboard');
 
 Route::middleware([
