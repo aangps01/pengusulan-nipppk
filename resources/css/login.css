@@ -1,0 +1,40 @@
+body {
+  background: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+body .login-container .header-section .logo img {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 20px;
+  width: 200px;
+}
+
+body .login-container .header-section .title {
+  color: #333;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+}
+
+body .login-container .header-section .title h1 {
+  margin: 0;
+}
+
+body .login-container .header-section .title h2 {
+  margin: 0;
+}
+
+body .login-container .login-section {
+  font-family: 'Nunito', sans-serif;
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 20px 15px;
+  width: 400px;
+}
