@@ -28,7 +28,9 @@ class User extends Authenticatable
         'nik',
         'email',
         'password',
-        'role'
+        'role',
+        'is_name_changed',
+        'is_email_changed',
     ];
 
     /**
@@ -50,6 +52,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_name_changed' => 'boolean',
+        'is_email_changed' => 'boolean',
     ];
 
     /**
@@ -74,5 +78,15 @@ class User extends Authenticatable
     public function getRolenameAttribute()
     {
         return $this->role == 1 ? 'User' : 'Admin';
+    }
+
+    public function is_admin()
+    {
+        return $this->role == 2;
+    }
+
+    public function is_user()
+    {
+        return $this->role == 1;
     }
 }

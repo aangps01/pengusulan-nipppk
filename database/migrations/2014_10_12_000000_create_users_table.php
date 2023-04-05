@@ -22,6 +22,8 @@ return new class extends Migration
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->integer('role')->default(1); // 1: user, 2: admin,
+            $table->boolean('is_name_changed')->default(false);
+            $table->boolean('is_email_changed')->default(false);
             $table->timestamps();
         });
     }

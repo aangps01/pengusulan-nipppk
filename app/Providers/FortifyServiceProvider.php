@@ -6,6 +6,7 @@ use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -32,10 +33,38 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
+        Fortify::authenticateUsing(function (Request $request) {
+            $request->validate([
+                'nik' => 'required|string',
+                'password' => 'required|string',
+            ]);
+
+            if($request->nik != 'admin') {
+                $request->validate([
+                    'nik' => 'digits:16',
+                ], [
+                    'nik.digits' => 'NIK harus berjumlah 16 digit',
+                ]);
+            }
+
+            $user = User::where('nik', $request->nik)->first();
+
+            // jika user tidak ada, create user dengan nik
+            if (!$user && $request->nik != 'admin') {
+                $user = User::create([
+                    'name' => $request->nik,
+                    'nik' => $request->nik,
+                    'email' => $request->nik . '@example.com',
+                    'password' => bcrypt($request->nik),
+                ]);
+            }
+            return $user;
+        });
+
         RateLimiter::for('login', function (Request $request) {
             $email = (string) $request->email;
 
-            return Limit::perMinute(5)->by($email.$request->ip());
+            return Limit::perMinute(5)->by($email . $request->ip());
         });
 
         RateLimiter::for('two-factor', function (Request $request) {

@@ -8,7 +8,7 @@ class AuthController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->user()) {
+        if (auth()->check()) {
             return redirect()->route('dashboard');
         }
 
