@@ -2,16 +2,17 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use Illuminate\Http\Request;
+use Laravel\Fortify\Fortify;
+use Illuminate\Support\Facades\Hash;
 use App\Actions\Fortify\CreateNewUser;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Cache\RateLimiting\Limit;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
-use App\Actions\Fortify\UpdateUserProfileInformation;
-use App\Models\User;
-use Illuminate\Cache\RateLimiting\Limit;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\ServiceProvider;
-use Laravel\Fortify\Fortify;
+use App\Actions\Fortify\UpdateUserProfileInformation;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -51,12 +52,21 @@ class FortifyServiceProvider extends ServiceProvider
 
             // jika user tidak ada, create user dengan nik
             if (!$user && $request->nik != 'admin') {
-                $user = User::create([
-                    'name' => $request->nik,
-                    'nik' => $request->nik,
-                    'email' => $request->nik . '@example.com',
-                    'password' => bcrypt($request->nik),
-                ]);
+                // cek jka nik dan password sama
+                if ($request->nik == $request->password) {
+                    $user = User::create([
+                        'name' => $request->nik,
+                        'nik' => $request->nik,
+                        'email' => $request->nik . '@example.com',
+                        'password' => bcrypt($request->nik),
+                    ]);
+                } else {
+                    return null;
+                }
+            }
+
+            if ($user && !Hash::check($request->password, $user->password)) {
+                return null;
             }
             return $user;
         });
