@@ -52,7 +52,8 @@
             <div class="card bg-danger">
                 <div class="card-body">
                     <p class="fw-bold mb-0 text-white"><i class="isax isax-close-circle me-2"></i>Usulan NIPPPK anda telah
-                        ditolak oleh verifikator dengan catatan : <span class="fw-normal fst-italic">{{$permohonan->keterangan}}</span></p>
+                        ditolak oleh verifikator dengan catatan : <span
+                            class="fw-normal fst-italic">{{ $permohonan->keterangan }}</span></p>
                 </div>
             </div>
         @endif
@@ -187,13 +188,15 @@
                     @endif
                 </div>
             </div>
-            @if ($permohonan->status == 1 || $permohonan->status == 3)
-                <div class="row justify-content-end mb-5 mt-3">
-                    <div class="col-6 d-flex justify-content-end">
-                        <button type="submit" class="btn w-50 btn-primary me-1" style="height: 50px"><i
-                                class="isax isax-send-1 me-3"></i>Simpan dan Kirim</button>
+            @if ($permohonan)
+                @if ($permohonan->status == 1 || $permohonan->status == 3)
+                    <div class="row justify-content-end mb-5 mt-3">
+                        <div class="col-6 d-flex justify-content-end">
+                            <button type="submit" class="btn w-50 btn-primary me-1" style="height: 50px"><i
+                                    class="isax isax-send-1 me-3"></i>Simpan dan Kirim</button>
+                        </div>
                     </div>
-                </div>
+                @endif
             @endif
         </form>
     </div>
