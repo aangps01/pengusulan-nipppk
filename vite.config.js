@@ -10,6 +10,7 @@ export default defineConfig({
                 'resources/css/pages/dashboard-custom.css',
                 'resources/js/app.js',
                 'resources/js/login.js',
+                'resources/js/auth.js',
             ],
             refresh: [
                 ...refreshPaths,

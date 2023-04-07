@@ -19,6 +19,8 @@
     <link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap/bootstrap.css') }}">
     {{-- Toastr --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    {{-- Icons --}}
+    <link rel="stylesheet" href="{{ asset('assets/vendors/iconsax/style.css') }}">
 
     @vite('resources/css/login.css')
 </head>
@@ -45,7 +47,12 @@
                         </div>
                         <div class="form-group mb-3">
                             <label for="password" class="fw-bold col-form-label">Password</label>
-                            <input type="password" class="form-control" name="password" id="password" placeholder="Masukkan password anda">
+                            <div class="input-group">
+                                    <input type="password" class="form-control" name="password" id="password"
+                                        placeholder="Masukkan password anda" required>
+                                    <button class="btn btn-toggle-password isax isax-eye-slash border" type="button"
+                                        id="button-addon2"></button>
+                                </div>
                         </div>
                         <div class="form-group mt-4">
                             <button type="submit" class="btn btn-primary d-block w-100 fw-bold">Login</button>
@@ -70,6 +77,7 @@
 
     {{-- JS Local --}}
     @vite('resources/js/login.js')
+    @vite('resources/js/auth.js')
     @include('components.toastr')
 </body>
 

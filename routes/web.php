@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\PengajuanController;
 use App\Http\Controllers\Admin\PermohonanController;
 use App\Http\Controllers\RoutingDashboardController;
@@ -75,4 +76,5 @@ Route::middleware([
     // OPEN REQUEST IN AUTH
     // My Profile
     Route::get('/my-profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('/my-profile', [ProfileController::class, 'update'])->name('profile.update');
 });
