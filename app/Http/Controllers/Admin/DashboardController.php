@@ -12,29 +12,19 @@ class DashboardController extends Controller
     public function index(){
         $status_permohonan = collect([
             [
-                'name' => 'Total User',
-                'count' => User::isUser()->count(),
-                'bg_color' => '#f56954',
-            ],
-            [
-                'name' => 'Total Usulan',
-                'count' => Permohonan::where('status', 0)->count(),
-                'bg_color' => '#f39c12',
-            ],
-            [
                 'name' => 'Pengajuan Baru',
                 'count' => Permohonan::where('status', 1)->count(),
-                'bg_color' => '#00c0ef',
+                'bg_color' => '#435ebe',
             ],
             [
                 'name' => 'Sedang Verifikasi',
                 'count' => Permohonan::where('status', 2)->count(),
-                'bg_color' => '#00a65a',
+                'bg_color' => '#ffc107',
             ],
             [
                 'name' => 'Revisi',
                 'count' => Permohonan::where('status', 3)->count(),
-                'bg_color' => '#f56954',
+                'bg_color' => '#dc3545',
             ],
             [
                 'name' => 'Verifikasi Ulang',
@@ -44,12 +34,12 @@ class DashboardController extends Controller
             [
                 'name' => 'Diterima',
                 'count' => Permohonan::where('status', 5)->count(),
-                'bg_color' => '#00c0ef',
+                'bg_color' => '#198754',
             ],
             [
                 'name' => 'Ditolak',
                 'count' => Permohonan::where('status', 6)->count(),
-                'bg_color' => '#00a65a',
+                'bg_color' => '#6c757d',
             ],
         ]);
         // casting to nested collection

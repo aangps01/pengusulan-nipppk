@@ -19,6 +19,12 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+                <li class="sidebar-item {{ request()->routeIs('*admin.permohonan*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.permohonan.index') }}" class='sidebar-link'>
+                        <i class="isax isax-edit"></i>
+                        <span>Data Permohonan</span>
+                    </a>
+                </li>
                 {{-- <li class="sidebar-item has-sub">
                     <a href="#" class="sidebar-link">
                         <i class="isax isax-data"></i>

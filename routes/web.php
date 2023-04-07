@@ -2,10 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\User\PengajuanController;
+use App\Http\Controllers\Admin\PermohonanController;
 use App\Http\Controllers\RoutingDashboardController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
-use App\Http\Controllers\User\PengajuanController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,22 @@ Route::middleware([
                 ->name('dashboard.')
                 ->group(function () {
                     Route::get('/', [AdminDashboardController::class, 'index'])->name('index');
+                });
+            Route::prefix('permohonan')
+                ->name('permohonan.')
+                ->group(function () {
+                    Route::get('/', [PermohonanController::class, 'index'])->name('index');
+                    Route::get('/verifikasi/{id}', [PermohonanController::class, 'verifikasi'])->name('verifikasi');
+                    Route::post('/tolak-permohonan', [PermohonanController::class, 'tolakPermohonan'])->name('tolak');
+                    Route::post('/selesai-permohonan', [PermohonanController::class, 'selesaiPermohonan'])->name('selesai');
+
+                    Route::prefix('berkas')
+                        ->name('berkas.')
+                        ->group(function () {
+                            // Ajax
+                            Route::post('/revisi', [PermohonanController::class, 'revisiBerkas'])->name('revisi');
+                            Route::post('/valid', [PermohonanController::class, 'validBerkas'])->name('valid');
+                        });
                 });
         });
     // USER ROLE

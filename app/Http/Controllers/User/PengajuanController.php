@@ -120,7 +120,7 @@ class PengajuanController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-            Log::error($e->getMessage());
+            Log::error($e->getFile() . $e->getLine() . $e->getMessage());
             return response()->json([
                 'status' => false,
                 'message' => 'Terjadi kesalahan saat mengunggah berkas',
