@@ -14,7 +14,7 @@
         {{-- CARD SHOW $permohonan->user->nik --}}
         <div class="card">
             <div class="card-body">
-                <div class="row justify-content-between  mb-4">
+                <div class="row justify-content-between mb-4">
                     <div class="col-auto">
                         <h5 class="fs-6">Detail Berkas Persyaratan</h5>
                     </div>
@@ -22,6 +22,9 @@
                         {!! $permohonan->badge_status !!}
                     </div>
                 </div>
+                @if($permohonan->status == 6)
+                <span class="badge bg-danger mb-4">Alasan Penolakan : {{ $permohonan->keterangan }}</span>
+                @endif
                 @foreach ($berkas_permohonan as $berkas)
                     <div class="form-group mb-3">
                         <label class="col-form-label fw-bold"
