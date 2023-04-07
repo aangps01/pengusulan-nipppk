@@ -23,7 +23,7 @@ class BerkasPersyaratanSeeder extends Seeder
                 "is_required" => true,
                 "batas_ukuran" => 1024,
                 "nama_format" => "PDF",
-                "tipe_format" => "pdf",
+                "tipe_format" => ".pdf",
                 "is_active" => true,
             ],
             [
@@ -32,7 +32,7 @@ class BerkasPersyaratanSeeder extends Seeder
                 "is_required" => true,
                 "batas_ukuran" => 1024,
                 "nama_format" => "PDF",
-                "tipe_format" => "pdf",
+                "tipe_format" => ".pdf",
                 "is_active" => true,
             ],
             [
@@ -41,7 +41,7 @@ class BerkasPersyaratanSeeder extends Seeder
                 "is_required" => true,
                 "batas_ukuran" => 1024,
                 "nama_format" => "PDF",
-                "tipe_format" => "pdf",
+                "tipe_format" => ".pdf",
                 "is_active" => true,
             ],
             [
@@ -50,7 +50,7 @@ class BerkasPersyaratanSeeder extends Seeder
                 "is_required" => true,
                 "batas_ukuran" => 1024,
                 "nama_format" => "PDF",
-                "tipe_format" => "pdf",
+                "tipe_format" => ".pdf",
                 "is_active" => true,
             ],
             [
@@ -59,7 +59,7 @@ class BerkasPersyaratanSeeder extends Seeder
                 "is_required" => true,
                 "batas_ukuran" => 1024,
                 "nama_format" => "PDF",
-                "tipe_format" => "pdf",
+                "tipe_format" => ".pdf",
                 "is_active" => true,
             ],
             [
@@ -68,7 +68,7 @@ class BerkasPersyaratanSeeder extends Seeder
                 "is_required" => true,
                 "batas_ukuran" => 1024,
                 "nama_format" => "PDF",
-                "tipe_format" => "pdf",
+                "tipe_format" => ".pdf",
                 "is_active" => true,
             ],
             [
@@ -77,7 +77,7 @@ class BerkasPersyaratanSeeder extends Seeder
                 "is_required" => true,
                 "batas_ukuran" => 1024,
                 "nama_format" => "JPG/JPEG",
-                "tipe_format" => "jpg,jpeg",
+                "tipe_format" => ".jpg,.jpeg",
                 "is_active" => true,
             ],
             [
@@ -86,7 +86,7 @@ class BerkasPersyaratanSeeder extends Seeder
                 "is_required" => true,
                 "batas_ukuran" => 1024,
                 "nama_format" => "PDF",
-                "tipe_format" => "pdf",
+                "tipe_format" => ".pdf",
                 "is_active" => true,
             ]
         ];

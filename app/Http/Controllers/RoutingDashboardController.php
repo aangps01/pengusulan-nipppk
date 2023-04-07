@@ -14,7 +14,7 @@ class RoutingDashboardController extends Controller
         if (auth()->user()->is_admin())
             return redirect()->route('admin.dashboard.index');
         else if (auth()->user()->is_user())
-            return redirect()->route('user.dashboard.index');
+            return redirect()->route('user.pengajuan.index');
         else{
             auth()->logout();
             return redirect()->route('login')->with('error', 'Akun anda tidak memiliki hak akses.');

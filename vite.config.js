@@ -6,7 +6,10 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
+                'resources/css/login.css',
+                'resources/css/pages/dashboard-custom.css',
                 'resources/js/app.js',
+                'resources/js/login.js',
             ],
             refresh: [
                 ...refreshPaths,

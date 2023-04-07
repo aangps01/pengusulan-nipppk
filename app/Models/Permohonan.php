@@ -52,4 +52,21 @@ class Permohonan extends Model
             return 'Ditolak';
         }
     }
+
+    public function getBadgeStatusAttribute()
+    {
+        if ($this->status == 1) {
+            return '<span class="badge bg-primary">Pengajuan Baru</span>';
+        } else if ($this->status == 2) {
+            return '<span class="badge bg-warning">Sedang Verifikasi</span>';
+        } else if ($this->status == 3) {
+            return '<span class="badge bg-danger">Revisi</span>';
+        } else if ($this->status == 4) {
+            return '<span class="badge bg-info">Verifikasi Ulang</span>';
+        } else if ($this->status == 5) {
+            return '<span class="badge bg-success">Selesai</span>';
+        } else if ($this->status == 6) {
+            return '<span class="badge bg-secondary">Ditolak</span>';
+        }
+    }
 }

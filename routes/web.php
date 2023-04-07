@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\RoutingDashboardController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
+use App\Http\Controllers\User\PengajuanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,7 @@ use App\Http\Controllers\User\DashboardController as UserDashboardController;
 */
 
 Route::get('/', [AuthController::class, 'index'])->name('login.index');
-Route::get('/login', function(){
+Route::get('/login', function () {
     return redirect()->route('login.index');
 })->name('login');
 Route::get('/dashboard', [RoutingDashboardController::class, 'index'])->name('dashboard');
@@ -44,10 +45,14 @@ Route::middleware([
         ->prefix('user')
         ->name('user.')
         ->group(function () {
-            Route::prefix('dashboard')
-                ->name('dashboard.')
+            Route::prefix('pengajuan')
+                ->name('pengajuan.')
                 ->group(function () {
-                    Route::get('/', [UserDashboardController::class, 'index'])->name('index');
+                    Route::get('/', [PengajuanController::class, 'index'])->name('index');
+                    Route::put('/', [PengajuanController::class, 'update'])->name('update');
+
+                    // Ajax
+                    Route::post('/upload-berkas', [PengajuanController::class, 'uploadBerkas'])->name('upload-berkas');
                 });
         });
     // OPEN REQUEST IN AUTH

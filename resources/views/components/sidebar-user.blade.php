@@ -13,18 +13,12 @@
         </div>
         <div class="sidebar-menu">
             <ul class="menu">
-                <li class="sidebar-item {{ request()->routeIs('*user.dashboard*') ? 'active' : '' }}">
-                    <a href="{{ route('user.dashboard.index') }}" class='sidebar-link'>
+                <li class="sidebar-item {{ request()->routeIs('*user.pengajuan*') ? 'active' : '' }}">
+                    <a href="{{ route('user.pengajuan.index') }}" class='sidebar-link'>
                         <i class="isax isax-element-4"></i>
-                        <span>Dashboard</span>
+                        <span>Pengusulan</span>
                     </a>
                 </li>
-                {{-- <li class="sidebar-item {{ request()->routeIs('*viewer.search*') ? 'active' : '' }}">
-                    <a href="{{ route('viewer.search.index') }}" class='sidebar-link'>
-                        <i class="isax isax-search-normal"></i>
-                        <span>Cari Data Kendaraan</span>
-                    </a>
-                </li> --}}
                 <hr>
                 <li class="sidebar-item">
                     <form action="{{ route('logout') }}" method="POST">
