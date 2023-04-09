@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Permohonan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -18,17 +19,46 @@ class PermohonanController extends Controller
         if ($request->ajax()) {
             $permohonans = [];
             $iteration = 0;
-            Permohonan::with('user')->get()
+            $query = Permohonan::with('user');
+
+            if ($request->status) {
+                $query->where('status', $request->status);
+            }
+
+            if ($request->tanggal_pengajuan) {
+                // 28/01/2023 - 28/01/2023
+                $tanggal_pengajuan = explode(' - ', $request->tanggal_pengajuan);
+                $start_date = Carbon::createFromFormat('d/m/Y', $tanggal_pengajuan[0], 'GMT+8')->startOfDay();
+                $end_date = Carbon::createFromFormat('d/m/Y', $tanggal_pengajuan[1], 'GMT+8')->endOfDay();
+                $query->whereBetween('created_at', [
+                    $start_date,
+                    $end_date
+                ]);
+            }
+
+            if ($request->tanggal_validasi) {
+                // 28/01/2023 - 28/01/2023
+                $tanggal_validasi = explode(' - ', $request->tanggal_validasi);
+                $start_date = Carbon::createFromFormat('d/m/Y', $tanggal_validasi[0], 'GMT+8')->startOfDay();
+                $end_date = Carbon::createFromFormat('d/m/Y', $tanggal_validasi[1], 'GMT+8')->endOfDay();
+                $query->whereBetween('tanggal_validasi', [
+                    $start_date,
+                    $end_date
+                ]);
+            }
+
+            $query->get()
                 ->map(function ($item) use (&$permohonans, &$iteration) {
                     $permohonans[] = [
                         ++$iteration,
                         $item->user->nik,
                         $item->created_at->format('d-m-Y'),
-                        $item->tanggal_validasi ?? '-',
+                        $item->tanggal_validasi->format('d-m-Y') ?? '-',
                         $item->badge_status,
                         encrypt($item->id),
                         $item->status,
                         $item->created_at->timestamp,
+                        $item->tanggal_validasi->timestamp,
                     ];
                 });
             return response()->json([
@@ -208,13 +238,21 @@ class PermohonanController extends Controller
         }
 
         // cek apakah semua berkas telah valid
-        $status = $revisi_count == 0 && $valid_count == $total_berkas ? 5 : 3;
+        $is_semua_valid = $revisi_count == 0 && $valid_count == $total_berkas ? true : false;
 
         DB::beginTransaction();
         try {
-            $permohonan->update([
-                'status' => $status,
-            ]);
+            if($is_semua_valid){
+                $permohonan->update([
+                    'status' => 5,
+                    'tanggal_validasi' => now(),
+                    'validator_id' =>auth()->user()->id,
+                ]);
+            }else{
+                $permohonan->update([
+                    'status' => 3,
+                ]);
+            }
             DB::commit();
             return response()->json([
                 'status' => 'success',

@@ -82,6 +82,8 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     {{--  Sweet Alert 2  --}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+     {{-- Moment Js --}}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     {{-- Date Range Picker --}}
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     {{-- Datatables Button --}}
