@@ -188,15 +188,13 @@
                     @endif
                 </div>
             </div>
-            @if ($permohonan)
-                @if ($permohonan->status == 1 || $permohonan->status == 3)
-                    <div class="row justify-content-end mb-5 mt-3">
-                        <div class="col-6 d-flex justify-content-end">
-                            <button type="submit" class="btn w-50 btn-primary me-1" style="height: 50px"><i
-                                    class="isax isax-send-1 me-3"></i>Simpan dan Kirim</button>
-                        </div>
+            @if (!$permohonan || $permohonan?->status == 1 || $permohonan?->status == 3)
+                <div class="row justify-content-end mb-5 mt-3">
+                    <div class="col-6 d-flex justify-content-end">
+                        <button type="submit" class="btn w-50 btn-primary me-1" style="height: 50px"><i
+                                class="isax isax-send-1 me-3"></i>Simpan dan Kirim</button>
                     </div>
-                @endif
+                </div>
             @endif
         </form>
     </div>
