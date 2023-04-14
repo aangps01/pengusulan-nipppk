@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Database\Seeder;
+use Database\Seeders\UserSeeder;
+use Database\Seeders\BerkasPersyaratanSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,20 +19,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             BerkasPersyaratanSeeder::class,
+            UserSeeder::class,
         ]);
-
-        User::updateOrCreate(
-            [
-                'nik' => '1234567890123456'
-            ],
-            [
-                'name' => 'Aang Pangantyas Sampurna',
-                'nik' => '1234567890123456',
-                'email' => '1234567890123456@example.com',
-                'password' => bcrypt('1234567890123456'),
-                'role' => 1,
-            ]
-        );
 
         User::updateOrCreate(
             [

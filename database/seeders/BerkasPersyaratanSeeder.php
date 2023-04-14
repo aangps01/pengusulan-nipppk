@@ -88,7 +88,34 @@ class BerkasPersyaratanSeeder extends Seeder
                 "nama_format" => "PDF",
                 "tipe_format" => ".pdf",
                 "is_active" => true,
-            ]
+            ],
+            [
+                "berkas_key" => Str::random(10),
+                "nama" => "Transkrip Nilai",
+                "is_required" => true,
+                "batas_ukuran" => 1024,
+                "nama_format" => "PDF",
+                "tipe_format" => ".pdf",
+                "is_active" => true,
+            ],
+            [
+                "berkas_key" => Str::random(10),
+                "nama" => "Sertifikat Pendidik",
+                "is_required" => true,
+                "batas_ukuran" => 1024,
+                "nama_format" => "PDF",
+                "tipe_format" => ".pdf",
+                "is_active" => true,
+            ],
+            [
+                "berkas_key" => Str::random(10),
+                "nama" => "Surat Pernyataan 5 Poin",
+                "is_required" => true,
+                "batas_ukuran" => 1024,
+                "nama_format" => "PDF",
+                "tipe_format" => ".pdf",
+                "is_active" => true,
+            ],
         ];
 
         foreach ($berkas_persyaratan as $berkas) {

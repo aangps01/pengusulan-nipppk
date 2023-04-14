@@ -50,21 +50,6 @@ class FortifyServiceProvider extends ServiceProvider
 
             $user = User::where('nik', $request->nik)->first();
 
-            // jika user tidak ada, create user dengan nik
-            if (!$user && $request->nik != 'admin') {
-                // cek jka nik dan password sama
-                if ($request->nik == $request->password) {
-                    $user = User::create([
-                        'name' => $request->nik,
-                        'nik' => $request->nik,
-                        'email' => $request->nik . '@example.com',
-                        'password' => bcrypt($request->nik),
-                    ]);
-                } else {
-                    return null;
-                }
-            }
-
             if ($user && !Hash::check($request->password, $user->password)) {
                 return null;
             }
