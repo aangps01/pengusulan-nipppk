@@ -78,10 +78,6 @@
     </div>
 @endsection
 
-@push('styles')
-    @vite('resources/css/auth.css')
-@endpush
-
 @push('scripts')
     @vite('resources/js/auth.js')
 @endpush
