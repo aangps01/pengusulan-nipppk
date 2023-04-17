@@ -53,12 +53,12 @@ class PermohonanController extends Controller
                         ++$iteration,
                         $item->user->nik,
                         $item->created_at->format('d-m-Y'),
-                        $item->tanggal_validasi->format('d-m-Y') ?? '-',
+                        $item->tanggal_validasi?->format('d-m-Y') ?? '-',
                         $item->badge_status,
                         encrypt($item->id),
                         $item->status,
-                        $item->created_at->timestamp,
-                        $item->tanggal_validasi->timestamp,
+                        $item->created_at?->timestamp,
+                        $item->tanggal_validasi?->timestamp ?? '-',
                     ];
                 });
             return response()->json([
