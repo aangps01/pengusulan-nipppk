@@ -246,8 +246,8 @@ class PengajuanController extends Controller
         if ($permohonan->status == 3) {
             // get semua berkas yang perlu revisi
             $berkas_revisi = $permohonan->berkasPermohonan->filter(function ($berkas) {
-                $berkas = $berkas->detailBerkasPermohonan()->latest()->first();
-                return $berkas->is_valid ? null : $berkas->detailBerkasPermohonan()->revisi()->first();
+                $berkas_check = $berkas->detailBerkasPermohonan()->latest()->first();
+                return $berkas_check->is_valid ? null : $berkas->detailBerkasPermohonan()->revisi()->first();
             });
 
             // cek jika semua berkas revisi sudah di berkas sementara
