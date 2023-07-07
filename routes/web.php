@@ -56,6 +56,9 @@ Route::middleware([
                             Route::post('/revisi', [PermohonanController::class, 'revisiBerkas'])->name('revisi');
                             Route::post('/valid', [PermohonanController::class, 'validBerkas'])->name('valid');
                         });
+
+                    // export laporan
+                    Route::get('/laporan', [PermohonanController::class, 'laporanExport'])->name('export');
                 });
         });
     // USER ROLE

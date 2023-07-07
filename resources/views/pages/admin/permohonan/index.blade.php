@@ -164,11 +164,21 @@
             },
             dom: 'lBfrtip',
             buttons: [{
-                extend: 'excelHtml5',
+                extend: 'csvHtml5',
                 text: '<i class="isax isax-export-1 me-2"></i>Export Excel',
                 className: 'btn btn-primary',
                 exportOptions: {
-                    columns: [1, 2, 3, 4]
+                    columns: [1]
+                },
+                action: function(e, dt, node, config) {
+                    // target blank
+                    window.open("{{ route('admin.permohonan.export') }}?status=" + $('#status').val() +
+                        "&tanggal_pengajuan=" + $('input[name="tanggal_pengajuan"]').val() +
+                        "&tanggal_validasi=" + $('input[name="tanggal_validasi"]').val());
+
+                    // window.location.href = "{{ url('admin/permohonan/export') }}?status=" + $('#status').val() +
+                    //     "&tanggal_pengajuan=" + $('input[name="tanggal_pengajuan"]').val() +
+                    //     "&tanggal_validasi=" + $('input[name="tanggal_validasi"]').val();
                 }
             }],
             language: {

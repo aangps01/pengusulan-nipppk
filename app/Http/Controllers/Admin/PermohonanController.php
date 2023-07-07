@@ -8,8 +8,10 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Models\DetailBerkasPermohonan;
 use Illuminate\Support\Facades\Storage;
+use App\Exports\Exports\LaporanPermohonanExport;
 use Illuminate\Contracts\Encryption\DecryptException;
 
 class PermohonanController extends Controller
@@ -300,5 +302,40 @@ class PermohonanController extends Controller
                 'message' => 'Terjadi kesalahan saat menolak permohonan',
             ]);
         }
+    }
+
+    public function laporanExport(Request $request)
+    {
+        $query = Permohonan::with('user');
+
+        if ($request->status) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->tanggal_pengajuan) {
+            // 28/01/2023 - 28/01/2023
+            $tanggal_pengajuan = explode(' - ', $request->tanggal_pengajuan);
+            $start_date = Carbon::createFromFormat('d/m/Y', $tanggal_pengajuan[0], 'GMT+8')->startOfDay();
+            $end_date = Carbon::createFromFormat('d/m/Y', $tanggal_pengajuan[1], 'GMT+8')->endOfDay();
+            $query->whereBetween('created_at', [
+                $start_date,
+                $end_date
+            ]);
+        }
+
+        if ($request->tanggal_validasi) {
+            // 28/01/2023 - 28/01/2023
+            $tanggal_validasi = explode(' - ', $request->tanggal_validasi);
+            $start_date = Carbon::createFromFormat('d/m/Y', $tanggal_validasi[0], 'GMT+8')->startOfDay();
+            $end_date = Carbon::createFromFormat('d/m/Y', $tanggal_validasi[1], 'GMT+8')->endOfDay();
+            $query->whereBetween('tanggal_validasi', [
+                $start_date,
+                $end_date
+            ]);
+        }
+
+        $permohonans = $query->get();
+
+        return Excel::download(new LaporanPermohonanExport($permohonans), 'laporan-permohonan.xlsx');
     }
 }
