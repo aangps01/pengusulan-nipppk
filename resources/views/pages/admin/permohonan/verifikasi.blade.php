@@ -22,6 +22,9 @@
                         {!! $permohonan->badge_status !!}
                     </div>
                 </div>
+                @if($permohonan->status == 4 || $permohonan->status == 5)
+                <button onclick="resetPermohonan()" class="btn btn-primary mb-3"><i class="isax isax-edit-2 me-2"></i>Reset Permohonan</button>
+                @endif
                 @if($permohonan->status == 6)
                 <span class="badge bg-danger mb-4">Alasan Penolakan : {{ $permohonan->keterangan }}</span>
                 @endif
@@ -374,6 +377,56 @@
                             Swal.fire(
                                 'Gagal!',
                                 'Permohonan gagal diselesaikan.',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
+        }
+
+        function resetPermohonan()
+        {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Anda akan mereset permohonan ini. Seluruh berkas akan butuh validasi ulang!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: "{{ route('admin.permohonan.reset') }}",
+                        type: "POST",
+                        data: {
+                            "_token": "{{ csrf_token() }}",
+                            "id": "{{ encrypt($permohonan->id) }}",
+                        },
+                        success: function(response) {
+                            if (response.status == 'success') {
+                                Swal.fire(
+                                    'Berhasil!',
+                                    response.message,
+                                    'success'
+                                ).then((result) => {
+                                    if (result.isConfirmed) {
+                                        location.reload();
+                                    }
+                                });
+                            } else {
+                                Swal.fire(
+                                    'Gagal!',
+                                    response.message,
+                                    'error'
+                                );
+                            }
+                        },
+                        error: function(xhr) {
+                            Swal.fire(
+                                'Gagal!',
+                                'Permohonan gagal direset.',
                                 'error'
                             );
                         }

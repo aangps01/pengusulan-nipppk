@@ -304,6 +304,52 @@ class PermohonanController extends Controller
         }
     }
 
+    public function resetPermohonan(Request $request)
+    {
+        if (!$request->ajax()) abort(404);
+
+        $request->validate([
+            'id' => 'required',
+        ]);
+
+        $permohonan = Permohonan::with('berkasPermohonan.detailBerkasPermohonan')->where('id', decrypt($request->id))
+            ->whereIn('status', [4,5]) // revisi, diterima, ditolak
+            ->firstOrFail();
+
+        DB::beginTransaction();
+        try {
+            $permohonan->update([
+                'status' => 4,
+                'tanggal_validasi' => null,
+                'validator_id' => null,
+            ]);
+
+            // permohonan has many berkas permohonan has manu detail berkas permohonan. Edit all detail berkas permohonan is_valid to 0
+            $permohonan->berkasPermohonan->map(function ($item) {
+                $item->detailBerkasPermohonan->map(function ($item) {
+                    $item->update([
+                        'is_valid' => false,
+                        'is_revisi' => false,
+                        'keterangan' => null,
+                    ]);
+                });
+            });
+
+            DB::commit();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Permohonan berhasil direset',
+            ]);
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error($e->getFile() . $e->getLine() . $e->getMessage());
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat mereset permohonan',
+            ]);
+        }
+    }
+
     public function laporanExport(Request $request)
     {
         $query = Permohonan::with('user');

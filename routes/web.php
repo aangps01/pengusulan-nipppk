@@ -48,6 +48,7 @@ Route::middleware([
                     Route::get('/verifikasi/{id}', [PermohonanController::class, 'verifikasi'])->name('verifikasi');
                     Route::post('/tolak-permohonan', [PermohonanController::class, 'tolakPermohonan'])->name('tolak');
                     Route::post('/selesai-permohonan', [PermohonanController::class, 'selesaiPermohonan'])->name('selesai');
+                    Route::post('/reset-permohonan', [PermohonanController::class, 'resetPermohonan'])->name('reset');
 
                     Route::prefix('berkas')
                         ->name('berkas.')
