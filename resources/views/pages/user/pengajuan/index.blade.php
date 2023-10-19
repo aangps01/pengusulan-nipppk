@@ -18,6 +18,13 @@
                     </p>
                 </div>
             </div>
+        @elseif($status_permohonan == -1)
+            <div class="card bg-danger">
+                <div class="card-body">
+                    <p class="fw-bold mb-0 text-white"><i class="isax isax-warning-2 me-2"></i>Anda belum melengkapi dokumen tambahan pada menu "Berkas Wajib Tambahan"
+                    </p>
+                </div>
+            </div>
         @elseif($status_permohonan == 1)
             <div class="card bg-primary">
                 <div class="card-body">

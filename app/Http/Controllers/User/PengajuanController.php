@@ -57,7 +57,7 @@ class PengajuanController extends Controller
 
         $permohonan = Permohonan::where('user_id', auth()->user()->id)->first();
 
-        $status_permohonan = !$permohonan ? 0 : $permohonan->status;
+        $status_permohonan = !$permohonan ? 0 : (!$permohonan->is_upload_dokumen_wajib_tambahan ? -1 : $permohonan->status);
         return view('pages.user.pengajuan.index', compact('berkas_persyaratan', 'status_permohonan', 'permohonan'));
     }
 
