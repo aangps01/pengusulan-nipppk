@@ -67,7 +67,7 @@ class User extends Authenticatable
 
     public function permohonan()
     {
-        return $this->hasMany(Permohonan::class);
+        return $this->hasOne(Permohonan::class);
     }
 
     public function validator()

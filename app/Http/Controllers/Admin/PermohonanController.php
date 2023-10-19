@@ -8,6 +8,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\DokumenWajibTambahan;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\DetailBerkasPermohonan;
 use Illuminate\Support\Facades\Storage;
@@ -72,6 +73,13 @@ class PermohonanController extends Controller
 
     public function verifikasi(Request $request, $id)
     {
+        $dokumens = collect([
+            [
+                'nama' => 'Surat Keputusan P3K',
+                'kode' => 'SKP3K',
+            ]
+        ]);
+
         try {
             $permohonan = Permohonan::with([
                 'user',
@@ -114,16 +122,28 @@ class PermohonanController extends Controller
                         'status' => 2,
                     ]);
                 }
+
+                // get all dokumen wajib tambahan
+                $dokumens_tambahan_user = DokumenWajibTambahan::where('user_id', $permohonan->user_id)->get();
+                $dokumens = collect([
+                    [
+                        'nama' => 'Surat Keputusan P3K',
+                        'kode' => 'SKP3K',
+                        'is_upload' => $dokumens_tambahan_user->where('kode_dokumen', 'SKP3K')->count() > 0 ? true : false,
+                        'filepath' => $dokumens_tambahan_user->where('kode_dokumen', 'SKP3K')->count() > 0 ? $dokumens_tambahan_user->where('kode_dokumen', 'SKP3K')->first()->filepath : '',
+                    ]
+                ]);
+
                 DB::commit();
             } catch (\Exception $e) {
                 DB::rollback();
                 Log::error($e->getFile() . $e->getLine() . $e->getMessage());
-                return redirect()->back()->with('error', 'Terjadi kesalahan saat mengunggah berkas');
+                return redirect()->back()->with('error', 'Terjadi kesalahan pada server');
             }
         } catch (DecryptException $e) {
             abort(404);
         }
-        return view('pages.admin.permohonan.verifikasi', compact('permohonan', 'berkas_permohonan', 'is_semua_berkas_terverifikasi'));
+        return view('pages.admin.permohonan.verifikasi', compact('permohonan', 'berkas_permohonan', 'is_semua_berkas_terverifikasi', 'dokumens'));
     }
 
     public function validBerkas(Request $request)

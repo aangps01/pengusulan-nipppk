@@ -19,6 +19,12 @@
                         <span>Pengusulan</span>
                     </a>
                 </li>
+                <li class="sidebar-item {{ request()->routeIs('*user.dokumen-tambahan*') ? 'active' : '' }}">
+                    <a href="{{ route('user.dokumen-tambahan.index') }}" class='sidebar-link'>
+                        <i class="isax isax-element-4"></i>
+                        <span>Berkas Wajib Tambahan</span>
+                    </a>
+                </li>
                 <hr>
                 <li class="sidebar-item">
                     <form action="{{ route('logout') }}" method="POST">

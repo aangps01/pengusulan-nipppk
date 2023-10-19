@@ -5,13 +5,14 @@ namespace App\Http\Controllers\User;
 use App\Models\Permohonan;
 use Illuminate\Http\Request;
 use App\Models\BerkasSementara;
+use App\Models\BerkasPermohonan;
 use App\Models\BerkasPersyaratan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
-use App\Models\BerkasPermohonan;
-use Illuminate\Support\Facades\Validator;
+use App\Models\DokumenWajibTambahan;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class PengajuanController extends Controller
 {
@@ -138,6 +139,12 @@ class PengajuanController extends Controller
 
     public function update(Request $request)
     {
+        $dokumens = collect([
+            [
+                'nama' => 'Surat Keputusan P3K',
+                'kode' => 'SKP3K',
+            ]
+        ]);
         // note :
         // 1. tolak permohonan jika semua berkas belum diupload => mau pengajuan baru
 
@@ -182,6 +189,17 @@ class PengajuanController extends Controller
 
                 // delete berkas sementara
                 $berkas_sementara->each->delete();
+
+                // check dokumen tambahan apakah sudah diupload
+                $dokumens_tambahan_user = DokumenWajibTambahan::whereHas('user', function ($query) {
+                    $query->where('id', auth()->user()->id);
+                })->get();
+                // if all dokumen tambahan is uploaded, set is_upload_dokumen_wajib_tambahan to true
+                if ($dokumens_tambahan_user->count() == $dokumens->count()) {
+                    $permohonan->update([
+                        'is_upload_dokumen_wajib_tambahan' => true,
+                    ]);
+                }
 
                 DB::commit();
             } catch (\Exception $e) {

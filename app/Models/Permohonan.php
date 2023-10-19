@@ -15,6 +15,7 @@ class Permohonan extends Model
         'keterangan',
         'tanggal_validasi',
         'validator_id',
+        'is_upload_dokumen_wajib_tambahan',
     ];
 
     protected $casts = [

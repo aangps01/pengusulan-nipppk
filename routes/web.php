@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\User\PengajuanController;
+use App\Http\Controllers\DokumenTambahanController;
 use App\Http\Controllers\Admin\PermohonanController;
 use App\Http\Controllers\RoutingDashboardController;
 use App\Http\Controllers\User\DashboardController as UserDashboardController;
@@ -75,6 +76,13 @@ Route::middleware([
 
                     // Ajax
                     Route::post('/upload-berkas', [PengajuanController::class, 'uploadBerkas'])->name('upload-berkas');
+                });
+
+            Route::prefix('dokumen-tambahan')
+                ->name('dokumen-tambahan.')
+                ->group(function () {
+                    Route::get('/', [DokumenTambahanController::class, 'index'])->name('index');
+                    Route::post('/', [DokumenTambahanController::class, 'store'])->name('store');
                 });
         });
     // OPEN REQUEST IN AUTH

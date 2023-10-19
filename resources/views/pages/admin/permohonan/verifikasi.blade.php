@@ -22,11 +22,12 @@
                         {!! $permohonan->badge_status !!}
                     </div>
                 </div>
-                @if($permohonan->status == 4 || $permohonan->status == 5)
-                <button onclick="resetPermohonan()" class="btn btn-primary mb-3"><i class="isax isax-edit-2 me-2"></i>Reset Permohonan</button>
+                @if ($permohonan->status == 4 || $permohonan->status == 5)
+                    <button onclick="resetPermohonan()" class="btn btn-primary mb-3"><i
+                            class="isax isax-edit-2 me-2"></i>Reset Permohonan</button>
                 @endif
-                @if($permohonan->status == 6)
-                <span class="badge bg-danger mb-4">Alasan Penolakan : {{ $permohonan->keterangan }}</span>
+                @if ($permohonan->status == 6)
+                    <span class="badge bg-danger mb-4">Alasan Penolakan : {{ $permohonan->keterangan }}</span>
                 @endif
                 @foreach ($berkas_permohonan as $berkas)
                     <div class="form-group mb-3">
@@ -44,7 +45,8 @@
                                         Lihat Data</button>
                                 @else
                                     <button type="button" class="btn btn-primary d-block w-100"
-                                        onclick="validasiBerkas(this)" style="height: 50px;" data-detail-id="{{ $berkas->get('detail_berkas_id') }}"
+                                        onclick="validasiBerkas(this)" style="height: 50px;"
+                                        data-detail-id="{{ $berkas->get('detail_berkas_id') }}"
                                         data-nama="{{ $berkas->get('nama') }}" data-url="{{ $berkas->get('filepath') }}">
                                         Verifikasi</button>
                                 @endif
@@ -59,6 +61,42 @@
                                     </p>
                                 </div>
                             @endif
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <span
+                    class="mb-3 badge {{ $permohonan->is_upload_dokumen_wajib_tambahan ? 'bg-success' : 'bg-danger' }}">{{ $permohonan->is_upload_dokumen_wajib_tambahan ? 'Dokumen tambahan sudah lengkap' : 'Dokumen tambahan belum lengkap' }}</span>
+                @foreach ($dokumens as $dokumen)
+                    <div class="form-group mb-3">
+                        <div class="row">
+                            <div class="col-auto"><label class="col-form-label fw-bold"
+                                    for="{{ $dokumen['kode'] }}">{{ $dokumen['nama'] }}*</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-auto flex-grow-1">
+                                @if (!$dokumen['is_upload'])
+                                    <input type="file" accept=".pdf" class="form-control upload-berkas"
+                                        value="-"
+                                        data-max-size="1024">
+                                @else
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <input type="text" class="form-control" value="{{ $dokumen['nama'] }}"
+                                                disabled>
+                                        </div>
+                                        <div class="col-3">
+                                            <a href="{{ Storage::url($dokumen['filepath']) }}"
+                                                class="btn btn-secondary w-100">Download</a>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -111,8 +149,9 @@
                                 id="catatan_revisi_berkas" style="height: 60px;" placeholder="Catatan Revisi">
                         </div>
                         <div class="form-group text-end mt-3">
-                            <button type="button" class="btn btn-outline-primary me-2 px-4" onclick="batalRevisiBerkas();"
-                                style="height: 50px;"><i class="isax isax-close-circle me-2"></i> Batal</button>
+                            <button type="button" class="btn btn-outline-primary me-2 px-4"
+                                onclick="batalRevisiBerkas();" style="height: 50px;"><i
+                                    class="isax isax-close-circle me-2"></i> Batal</button>
                             <button type="button" class="btn btn-primary" onclick="submitRevisiBerkas();"
                                 style="height: 50px;"><i class="isax isax-send-2 me-2"></i> Kirim
                                 Revisi</button>
@@ -287,7 +326,7 @@
                         // ajax
                         preConfirm: (alasan_penolakan) => {
                             // alasan penolakan required
-                            if(alasan_penolakan == '') {
+                            if (alasan_penolakan == '') {
                                 Swal.fire(
                                     'Gagal!',
                                     'Alasan penolakan tidak boleh kosong.',
@@ -385,8 +424,7 @@
             });
         }
 
-        function resetPermohonan()
-        {
+        function resetPermohonan() {
             Swal.fire({
                 title: 'Apakah anda yakin?',
                 text: "Anda akan mereset permohonan ini. Seluruh berkas akan butuh validasi ulang!",
