@@ -143,6 +143,10 @@ class PengajuanController extends Controller
             [
                 'nama' => 'Surat Keputusan P3K',
                 'kode' => 'SKP3K',
+            ],
+            [
+                'nama' => 'Surat Keputusan Calon P3K',
+                'kode' => 'SKCALONP3K',
             ]
         ]);
         // note :

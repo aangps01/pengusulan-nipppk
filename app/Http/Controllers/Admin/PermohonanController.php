@@ -77,6 +77,10 @@ class PermohonanController extends Controller
             [
                 'nama' => 'Surat Keputusan P3K',
                 'kode' => 'SKP3K',
+            ],
+            [
+                'nama' => 'Surat Keputusan Calon P3K',
+                'kode' => 'SKCALONP3K',
             ]
         ]);
 
@@ -131,6 +135,12 @@ class PermohonanController extends Controller
                         'kode' => 'SKP3K',
                         'is_upload' => $dokumens_tambahan_user->where('kode_dokumen', 'SKP3K')->count() > 0 ? true : false,
                         'filepath' => $dokumens_tambahan_user->where('kode_dokumen', 'SKP3K')->count() > 0 ? $dokumens_tambahan_user->where('kode_dokumen', 'SKP3K')->first()->filepath : '',
+                    ],
+                    [
+                        'nama' => 'Surat Keputusan Calon P3K',
+                        'kode' => 'SKCALONP3K',
+                        'is_upload' => $dokumens_tambahan_user->where('kode_dokumen', 'SKCALONP3K')->count() > 0 ? true : false,
+                        'filepath' => $dokumens_tambahan_user->where('kode_dokumen', 'SKCALONP3K')->count() > 0 ? $dokumens_tambahan_user->where('kode_dokumen', 'SKCALONP3K')->first()->filepath : '',
                     ]
                 ]);
 
@@ -252,7 +262,7 @@ class PermohonanController extends Controller
         })->count();
         $total_berkas = $permohonan->berkasPermohonan->count();
 
-        if($total_berkas != $valid_count+$revisi_count) {
+        if ($total_berkas != $valid_count + $revisi_count) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Masih terdapat berkas yang belum divalidasi',
@@ -264,13 +274,13 @@ class PermohonanController extends Controller
 
         DB::beginTransaction();
         try {
-            if($is_semua_valid){
+            if ($is_semua_valid) {
                 $permohonan->update([
                     'status' => 5,
                     'tanggal_validasi' => now(),
-                    'validator_id' =>auth()->user()->id,
+                    'validator_id' => auth()->user()->id,
                 ]);
-            }else{
+            } else {
                 $permohonan->update([
                     'status' => 3,
                 ]);
@@ -333,7 +343,7 @@ class PermohonanController extends Controller
         ]);
 
         $permohonan = Permohonan::with('berkasPermohonan.detailBerkasPermohonan')->where('id', decrypt($request->id))
-            ->whereIn('status', [4,5]) // revisi, diterima, ditolak
+            ->whereIn('status', [4, 5]) // revisi, diterima, ditolak
             ->firstOrFail();
 
         DB::beginTransaction();
