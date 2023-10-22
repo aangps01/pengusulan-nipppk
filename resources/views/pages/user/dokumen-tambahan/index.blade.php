@@ -34,30 +34,25 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-auto flex-grow-1">
-                                    @if (!$dokumen['is_upload'])
-                                        <input type="file" accept=".pdf" class="form-control upload-berkas"
-                                            name="berkas[{{ $dokumen['kode'] }}]" id="{{ $dokumen['kode'] }}"
-                                            data-max-size="1024">
-                                    @else
-                                        <div class="row">
-                                            <div class="col-9">
-                                                <input type="text" class="form-control" value="{{ $dokumen['nama'] }}"
-                                                    disabled>
-                                            </div>
+                                    <div class="row">
+                                        <div class="{{ $dokumen['is_upload'] ? 'col-9' : 'col-12' }}">
+                                            <input type="file" accept=".pdf" class="form-control upload-berkas"
+                                                name="berkas[{{ $dokumen['kode'] }}]" id="{{ $dokumen['kode'] }}"
+                                                data-max-size="1024">
+                                        </div>
+                                        @if ($dokumen['is_upload'])
                                             <div class="col-3">
                                                 <a href="{{ Storage::url($dokumen['filepath']) }}"
-                                                    class="btn btn-secondary w-100">Download</a>
+                                                    class="btn btn-secondary w-100" target="_blank">Lihat File Sebelumnya</a>
                                             </div>
-                                        </div>
-                                    @endif
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     @endforeach
                     <div class="form-group mb-3">
-                        @if (!$is_all_upload)
-                            <button type="submit" class="btn btn-primary w-100">Simpan Berkas</button>
-                        @endif
+                        <button type="submit" class="btn btn-primary w-100">Simpan Berkas</button>
                     </div>
                 </form>
             </div>
