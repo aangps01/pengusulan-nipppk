@@ -52,13 +52,16 @@ class PengajuanController extends Controller
                     'status' => $berkas_persyaratan->berkasPermohonan->first()?->detailBerkasPermohonan->first()->status,
                     'catatan_revisi' => $berkas_persyaratan->berkasPermohonan->first()?->detailBerkasPermohonan->first()->keterangan,
                     'berkas_badge_status' => $berkas_persyaratan->berkasPermohonan->first()?->detailBerkasPermohonan->first()->badge_status,
+                    'is_active' => $berkas_persyaratan->is_active,
                 ]);
             });
+
+        $user = auth()->user();
 
         $permohonan = Permohonan::where('user_id', auth()->user()->id)->first();
 
         $status_permohonan = !$permohonan ? 0 : (!$permohonan->is_upload_dokumen_wajib_tambahan ? -1 : $permohonan->status);
-        return view('pages.user.pengajuan.index', compact('berkas_persyaratan', 'status_permohonan', 'permohonan'));
+        return view('pages.user.pengajuan.index', compact('berkas_persyaratan', 'status_permohonan', 'permohonan', 'user'));
     }
 
     public function uploadBerkas(Request $request)
@@ -158,9 +161,11 @@ class PengajuanController extends Controller
             $berkas_persyaratan = BerkasPersyaratan::get();
             // cek semua berkas persyaratan required apakah ada di berkas sementara
             foreach ($berkas_persyaratan as $berkas) {
-                if ($berkas->is_required) {
-                    if (!BerkasSementara::where('user_id', auth()->user()->id)->where('berkas_persyaratan_id', $berkas->id)->whereNull('permohonan_id')->exists()) {
-                        return redirect()->back()->with('error', 'Berkas ' . $berkas->nama . ' belum diupload');
+                if($berkas->is_active){
+                    if ($berkas->is_required) {
+                        if (!BerkasSementara::where('user_id', auth()->user()->id)->where('berkas_persyaratan_id', $berkas->id)->whereNull('permohonan_id')->exists()) {
+                            return redirect()->back()->with('error', 'Berkas ' . $berkas->nama . ' belum diupload');
+                        }
                     }
                 }
             }

@@ -21,7 +21,8 @@
         @elseif($status_permohonan == -1)
             <div class="card bg-danger">
                 <div class="card-body">
-                    <p class="fw-bold mb-0 text-white"><i class="isax isax-warning-2 me-2"></i>Anda belum melengkapi dokumen tambahan pada menu "Berkas Wajib Tambahan"
+                    <p class="fw-bold mb-0 text-white"><i class="isax isax-warning-2 me-2"></i>Anda belum melengkapi dokumen
+                        tambahan pada menu "Berkas Wajib Tambahan"
                     </p>
                 </div>
             </div>
@@ -64,6 +65,65 @@
                 </div>
             </div>
         @endif
+        <div class="card">
+            <div class="card-body py-3">
+                <h5 class="fs-6 mb-3">Data Diri PPPK</h5>
+                <div class="row">
+                    <div class="col-6">
+                        <table class="table text-sm">
+                            <tr>
+                                <td>Nomor Peserta</td>
+                                <th>: {{ $user->nomor_peserta ?? '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>NIK</td>
+                                <th>: {{ $user->nik ?? '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>Nama Sesuai Ijazah</td>
+                                <th>: {{ $user->name ?? '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>Pendidikan</td>
+                                <th>: {{ $user->pendidikan ?? '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>Gelar Depan</td>
+                                <th>: {{ $user->gelar_depan ?? '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>Gelar Belakang</td>
+                                <th>: {{ $user->gelar_belakang ?? '-' }}</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <table class="table">
+                            <tr>
+                                <td>Tempat Lahir</td>
+                                <th>: {{ $user->tempat_lahir ?? '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>Tanggal Lahir</td>
+                                <th>: {{ $user->tanggal_lahir ? Carbon\Carbon::parse($user->tanggal_lahir)->locale('id')->isoFormat('LL') : '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>Jenis Kelamin</td>
+                                <th>: {{ $user->jenis_kelamin ?? '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>Jabatan yang dilamar</td>
+                                <th>: {{ $user->jabatan_dilamar ?? '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>Unit Kerja</td>
+                                <th>: {{ $user->unit_kerja ?? '-' }}</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
         <form action="{{ route('user.pengajuan.update') }}" method="POST">
             @method('PUT')
             @csrf
@@ -73,124 +133,130 @@
                     <h5 class="fs-6 mb-3">Kelengkapan Berkas Data Usulan</h5>
                     @if (!$permohonan || $permohonan->status == 1)
                         @foreach ($berkas_persyaratan as $berkas)
-                            <div class="form-group mb-3">
-                                <div class="row justify-content-between">
-                                    <div class="col-auto"><label class="col-form-label fw-bold"
-                                            for="{{ $berkas->get('berkas_key') }}">{{ $berkas->get('nama') }}{{ $berkas->get('is_required') ? '*' : '' }}</label>
+                            @if ($berkas->get('is_active'))
+                                <div class="form-group mb-3">
+                                    <div class="row justify-content-between">
+                                        <div class="col-auto"><label class="col-form-label fw-bold"
+                                                for="{{ $berkas->get('berkas_key') }}">{{ $berkas->get('nama') }}{{ $berkas->get('is_required') ? '*' : '' }}</label>
+                                        </div>
+                                        <div class="col-auto text-primary d-flex align-items-center">
+                                            <p class="d-inline mb-0" style="font-size:0.8rem;">
+                                                Format Dokumen:
+                                                <span class="me-3 fw-bold">{{ $berkas->get('nama_format') }}</span>
+                                            </p>
+                                            <p class="d-inline mb-0" style="font-size:0.8rem;">
+                                                Ukuran Maksimal:
+                                                <span class="fw-bold">{{ $berkas->get('batas_ukuran') }} KB</span>
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div class="col-auto text-primary d-flex align-items-center">
-                                        <p class="d-inline mb-0" style="font-size:0.8rem;">
-                                            Format Dokumen:
-                                            <span class="me-3 fw-bold">{{ $berkas->get('nama_format') }}</span>
-                                        </p>
-                                        <p class="d-inline mb-0" style="font-size:0.8rem;">
-                                            Ukuran Maksimal:
-                                            <span class="fw-bold">{{ $berkas->get('batas_ukuran') }} KB</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-auto flex-grow-1">
-                                        <input type="file" accept="{{ $berkas->get('tipe_format') }}"
-                                            class="form-control upload-berkas"
-                                            name="berkas[{{ $berkas->get('berkas_key') }}]"
-                                            id="{{ $berkas->get('berkas_key') }}"
-                                            data-max-size="{{ $berkas->get('batas_ukuran') }}">
-                                    </div>
-                                    <div class="col-lg-2 d-flex justify-content-end {{ !$berkas->get('berkas_filepath') ? 'd-none' : null }}"
-                                        id="container-lihat-data-{{ $berkas->get('berkas_key') }}">
-                                        <button type="button" class="btn btn-secondary btn-sm d-block w-100"
-                                            onclick="lihatBerkas('{{ Storage::url($berkas->get('berkas_filepath')) }}')">
-                                            <i class="isax isax-search-normal me-2"></i> Lihat Data</button>
-                                    </div>
-                                    <div class="col-lg-2 d-flex justify-content-end">
-                                        <button type="button" class="btn btn-primary btn-sm d-block w-100"
-                                            onclick="uploadBerkas('{{ $berkas->get('berkas_key') }}','{{ encrypt($berkas->get('id')) }}', '{{ $permohonan ? encrypt($permohonan->id) : '' }}', 'container-lihat-data-{{ $berkas->get('berkas_key') }}')">
-                                            <i class="isax isax-document-upload me-2"></i>Upload Berkas</button>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                        {{-- CASE REVISI --}}
-                    @elseif($permohonan->status == 3)
-                        @foreach ($berkas_persyaratan as $berkas)
-                            <div class="form-group mb-3">
-                                <div class="row justify-content-between">
-                                    <div class="col-auto"><label class="col-form-label fw-bold"
-                                            for="{{ $berkas->get('berkas_key') }}">{{ $berkas->get('nama') }}{{ $berkas->get('is_required') ? '*' : '' }}</label>
-                                    </div>
-                                    <div class="col-auto text-primary d-flex align-items-center">
-                                        <p class="d-inline mb-0" style="font-size:0.8rem;">
-                                            Format Dokumen:
-                                            <span class="me-3 fw-bold">{{ $berkas->get('nama_format') }}</span>
-                                        </p>
-                                        <p class="d-inline mb-0" style="font-size:0.8rem;">
-                                            Ukuran Maksimal:
-                                            <span class="fw-bold">{{ $berkas->get('batas_ukuran') }} KB</span>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-auto flex-grow-1">
-                                        @if ($berkas->get('status') == 'Revisi')
+                                    <div class="row">
+                                        <div class="col-lg-auto flex-grow-1">
                                             <input type="file" accept="{{ $berkas->get('tipe_format') }}"
                                                 class="form-control upload-berkas"
                                                 name="berkas[{{ $berkas->get('berkas_key') }}]"
                                                 id="{{ $berkas->get('berkas_key') }}"
                                                 data-max-size="{{ $berkas->get('batas_ukuran') }}">
-                                        @else
-                                            <input type="text" class="form-control"
-                                                value="{{ $berkas->get('berkas_filename') }}" disabled>
-                                        @endif
-                                    </div>
-                                    <div class="col-lg-2 d-flex justify-content-end {{ !$berkas->get('berkas_filepath') ? 'd-none' : null }}"
-                                        id="container-lihat-data-{{ $berkas->get('berkas_key') }}">
-                                        <button type="button" class="btn btn-secondary btn-sm d-block w-100"
-                                            onclick="lihatBerkas('{{ Storage::url($berkas->get('berkas_filepath')) }}')">
-                                            <i class="isax isax-search-normal me-2"></i> Lihat Data</button>
-                                    </div>
-                                    @if ($berkas->get('status') == 'Revisi')
+                                        </div>
+                                        <div class="col-lg-2 d-flex justify-content-end {{ !$berkas->get('berkas_filepath') ? 'd-none' : null }}"
+                                            id="container-lihat-data-{{ $berkas->get('berkas_key') }}">
+                                            <button type="button" class="btn btn-secondary btn-sm d-block w-100"
+                                                onclick="lihatBerkas('{{ Storage::url($berkas->get('berkas_filepath')) }}')">
+                                                <i class="isax isax-search-normal me-2"></i> Lihat Data</button>
+                                        </div>
                                         <div class="col-lg-2 d-flex justify-content-end">
                                             <button type="button" class="btn btn-primary btn-sm d-block w-100"
                                                 onclick="uploadBerkas('{{ $berkas->get('berkas_key') }}','{{ encrypt($berkas->get('id')) }}', '{{ $permohonan ? encrypt($permohonan->id) : '' }}', 'container-lihat-data-{{ $berkas->get('berkas_key') }}')">
                                                 <i class="isax isax-document-upload me-2"></i>Upload Berkas</button>
                                         </div>
-                                    @endif
-                                    <div class="col-lg-2 d-flex align-items-center justify-content-center">
-                                        {!! $berkas->get('berkas_badge_status') !!}
                                     </div>
                                 </div>
-                                @if ($berkas->get('status') == 'Revisi')
-                                    <div class="col-12">
-                                        <p class="fw-bold text-danger mb-0 mt-2">Catatan revisi :
-                                            {{ $berkas->get('catatan_revisi') }}
-                                        </p>
+                            @endif
+                        @endforeach
+                        {{-- CASE REVISI --}}
+                    @elseif($permohonan->status == 3)
+                        @foreach ($berkas_persyaratan as $berkas)
+                            @if ($berkas->get('is_active'))
+                                <div class="form-group mb-3">
+                                    <div class="row justify-content-between">
+                                        <div class="col-auto"><label class="col-form-label fw-bold"
+                                                for="{{ $berkas->get('berkas_key') }}">{{ $berkas->get('nama') }}{{ $berkas->get('is_required') ? '*' : '' }}</label>
+                                        </div>
+                                        <div class="col-auto text-primary d-flex align-items-center">
+                                            <p class="d-inline mb-0" style="font-size:0.8rem;">
+                                                Format Dokumen:
+                                                <span class="me-3 fw-bold">{{ $berkas->get('nama_format') }}</span>
+                                            </p>
+                                            <p class="d-inline mb-0" style="font-size:0.8rem;">
+                                                Ukuran Maksimal:
+                                                <span class="fw-bold">{{ $berkas->get('batas_ukuran') }} KB</span>
+                                            </p>
+                                        </div>
                                     </div>
-                                @endif
-                            </div>
+                                    <div class="row">
+                                        <div class="col-lg-auto flex-grow-1">
+                                            @if ($berkas->get('status') == 'Revisi')
+                                                <input type="file" accept="{{ $berkas->get('tipe_format') }}"
+                                                    class="form-control upload-berkas"
+                                                    name="berkas[{{ $berkas->get('berkas_key') }}]"
+                                                    id="{{ $berkas->get('berkas_key') }}"
+                                                    data-max-size="{{ $berkas->get('batas_ukuran') }}">
+                                            @else
+                                                <input type="text" class="form-control"
+                                                    value="{{ $berkas->get('berkas_filename') }}" disabled>
+                                            @endif
+                                        </div>
+                                        <div class="col-lg-2 d-flex justify-content-end {{ !$berkas->get('berkas_filepath') ? 'd-none' : null }}"
+                                            id="container-lihat-data-{{ $berkas->get('berkas_key') }}">
+                                            <button type="button" class="btn btn-secondary btn-sm d-block w-100"
+                                                onclick="lihatBerkas('{{ Storage::url($berkas->get('berkas_filepath')) }}')">
+                                                <i class="isax isax-search-normal me-2"></i> Lihat Data</button>
+                                        </div>
+                                        @if ($berkas->get('status') == 'Revisi')
+                                            <div class="col-lg-2 d-flex justify-content-end">
+                                                <button type="button" class="btn btn-primary btn-sm d-block w-100"
+                                                    onclick="uploadBerkas('{{ $berkas->get('berkas_key') }}','{{ encrypt($berkas->get('id')) }}', '{{ $permohonan ? encrypt($permohonan->id) : '' }}', 'container-lihat-data-{{ $berkas->get('berkas_key') }}')">
+                                                    <i class="isax isax-document-upload me-2"></i>Upload Berkas</button>
+                                            </div>
+                                        @endif
+                                        <div class="col-lg-2 d-flex align-items-center justify-content-center">
+                                            {!! $berkas->get('berkas_badge_status') !!}
+                                        </div>
+                                    </div>
+                                    @if ($berkas->get('status') == 'Revisi')
+                                        <div class="col-12">
+                                            <p class="fw-bold text-danger mb-0 mt-2">Catatan revisi :
+                                                {{ $berkas->get('catatan_revisi') }}
+                                            </p>
+                                        </div>
+                                    @endif
+                                </div>
+                            @endif
                         @endforeach
                         {{-- CASE SEDANG VERIFIKASI ATAU VERIFIKASI ULANG --}}
                     @else
                         @foreach ($berkas_persyaratan as $berkas)
-                            <div class="form-group mb-3">
-                                <div class="row justify-content-between">
-                                    <div class="col-auto">
-                                        <label
-                                            class="col-form-label fw-bold">{{ $berkas->get('nama') }}{{ $berkas->get('is_required') ? '*' : '' }}</label>
+                            @if ($berkas->get('is_active'))
+                                <div class="form-group mb-3">
+                                    <div class="row justify-content-between">
+                                        <div class="col-auto">
+                                            <label
+                                                class="col-form-label fw-bold">{{ $berkas->get('nama') }}{{ $berkas->get('is_required') ? '*' : '' }}</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-10">
+                                            <input type="text" class="form-control"
+                                                value="{{ $berkas->get('berkas_filename') }}" disabled>
+                                        </div>
+                                        <div class="col-lg-2 d-flex align-items-center justify-content-center">
+                                            <a href="{{ Storage::url($berkas->get('berkas_filepath')) }}"
+                                                class="btn btn-outline-primary text-decoration-none px-5"
+                                                style="font-size: 0.8rem" target="_blank">Lihat</a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-lg-10">
-                                        <input type="text" class="form-control"
-                                            value="{{ $berkas->get('berkas_filename') }}" disabled>
-                                    </div>
-                                    <div class="col-lg-2 d-flex align-items-center justify-content-center">
-                                        <a href="{{ Storage::url($berkas->get('berkas_filepath')) }}"
-                                            class="btn btn-outline-primary text-decoration-none px-5"
-                                            style="font-size: 0.8rem" target="_blank">Lihat</a>
-                                    </div>
-                                </div>
-                            </div>
+                            @endif
                         @endforeach
                     @endif
                 </div>

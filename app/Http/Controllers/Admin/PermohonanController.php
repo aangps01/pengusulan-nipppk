@@ -50,11 +50,18 @@ class PermohonanController extends Controller
                 ]);
             }
 
+            if ($request->jenis) {
+                $query->whereHas('user', function ($q) use ($request) {
+                    $q->where('tipe', $request->jenis);
+                });
+            }
+
             $query->get()
                 ->map(function ($item) use (&$permohonans, &$iteration) {
                     $permohonans[] = [
                         ++$iteration,
                         $item->user->nik,
+                        $item->user->name,
                         $item->created_at->format('d-m-Y'),
                         $item->tanggal_validasi?->format('d-m-Y') ?? '-',
                         $item->badge_status,

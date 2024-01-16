@@ -32,6 +32,17 @@ class User extends Authenticatable
         'role',
         'is_name_changed',
         'is_email_changed',
+        'nomor_peserta',
+        'gelar_depan',
+        'gelar_belakang',
+        'tempat_lahir',
+        'tanggal_lahir',
+        'jenis_kelamin',
+        'pendidikan',
+        'jabatan_dilamar',
+        'unit_kerja',
+        'tipe',
+        'tahun',
     ];
 
     /**

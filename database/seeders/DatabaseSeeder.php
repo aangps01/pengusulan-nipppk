@@ -5,7 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Database\Seeders\UserSeeder;
+use Database\Seeders\Year2024\UserSeeder as Year2024UserSeeder;
 use Database\Seeders\BerkasPersyaratanSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,7 +19,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             BerkasPersyaratanSeeder::class,
-            UserSeeder::class,
+            Year2024UserSeeder::class,
+            // UserSeeder::class,
         ]);
 
         User::updateOrCreate(

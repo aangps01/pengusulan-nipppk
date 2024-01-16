@@ -11,7 +11,64 @@
         </div>
     </div>
     <div class="page-content">
-        {{-- CARD SHOW $permohonan->user->nik --}}
+        <div class="card">
+            <div class="card-body py-3">
+                <div class="row">
+                    <div class="col-6">
+                        <table class="table text-sm">
+                            <tr>
+                                <td>Nomor Peserta</td>
+                                <th>: {{ $permohonan->user->nomor_peserta ?? '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>NIK</td>
+                                <th>: {{ $permohonan->user->nik ?? '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>Nama Sesuai Ijazah</td>
+                                <th>: {{ $permohonan->user->name ?? '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>Pendidikan</td>
+                                <th>: {{ $permohonan->user->pendidikan ?? '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>Gelar Depan</td>
+                                <th>: {{ $permohonan->user->gelar_depan ?? '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>Gelar Belakang</td>
+                                <th>: {{ $permohonan->user->gelar_belakang ?? '-' }}</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <table class="table">
+                            <tr>
+                                <td>Tempat Lahir</td>
+                                <th>: {{ $permohonan->user->tempat_lahir ?? '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>Tanggal Lahir</td>
+                                <th>: {{ $permohonan->user->tanggal_lahir ? Carbon\Carbon::parse($permohonan->user->tanggal_lahir)->locale('id')->isoFormat('LL') : '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>Jenis Kelamin</td>
+                                <th>: {{ $permohonan->user->jenis_kelamin ?? '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>Jabatan yang dilamar</td>
+                                <th>: {{ $permohonan->user->jabatan_dilamar ?? '-' }}</th>
+                            </tr>
+                            <tr>
+                                <td>Unit Kerja</td>
+                                <th>: {{ $permohonan->user->unit_kerja ?? '-' }}</th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="card">
             <div class="card-body">
                 <div class="row justify-content-between mb-4">
@@ -81,9 +138,7 @@
                         <div class="row">
                             <div class="col-lg-auto flex-grow-1">
                                 @if (!$dokumen['is_upload'])
-                                    <input type="file" accept=".pdf" class="form-control upload-berkas"
-                                        value="-"
-                                        data-max-size="1024">
+                                    <input type="text" class="form-control" value="Belum upload file" disabled>
                                 @else
                                     <div class="row">
                                         <div class="col-9">
