@@ -18,7 +18,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        dd(__DIR__ . "\\teknis.json");
         // call json in this directory namespace "teknis.json"
         $pegawai_teknis = json_decode(file_get_contents(__DIR__ ."/teknis.json"), true);
         $pegawai_guru = json_decode(file_get_contents(__DIR__ ."/guru.json"), true);
