@@ -20,9 +20,9 @@ class UserSeeder extends Seeder
     {
         dd(__DIR__ . "\\teknis.json");
         // call json in this directory namespace "teknis.json"
-        $pegawai_teknis = json_decode(file_get_contents(__DIR__ ."\\teknis.json"), true);
-        $pegawai_guru = json_decode(file_get_contents(__DIR__ ."\\guru.json"), true);
-        $pegawai_nakes = json_decode(file_get_contents(__DIR__ ."\\nakes.json"), true);
+        $pegawai_teknis = json_decode(file_get_contents(__DIR__ ."\/teknis.json"), true);
+        $pegawai_guru = json_decode(file_get_contents(__DIR__ ."\/guru.json"), true);
+        $pegawai_nakes = json_decode(file_get_contents(__DIR__ ."\/nakes.json"), true);
 
         // pegawai teknis
         DB::beginTransaction();
