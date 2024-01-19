@@ -22,7 +22,7 @@
             <div class="card bg-danger">
                 <div class="card-body">
                     <p class="fw-bold mb-0 text-white"><i class="isax isax-warning-2 me-2"></i>Berhasil mengajukan usulan. Silahkan melengkapi dokumen
-                        tambahan pada menu "Berkas Wajib Tambahan"
+                        tambahan pada menu "Berkas Wajib Tambahan" jika berkas tersebut telah terbit
                     </p>
                 </div>
             </div>
