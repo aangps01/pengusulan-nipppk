@@ -28,7 +28,7 @@ class BerkasPersyaratanSeeder extends Seeder
             ],
             [
                 "berkas_key" => Str::random(10),
-                "nama" => "Ijazah Terakhir",
+                "nama" => "Ijazah yang dipakai saat melamar",
                 "is_required" => true,
                 "batas_ukuran" => 1024,
                 "nama_format" => "PDF",
@@ -82,7 +82,7 @@ class BerkasPersyaratanSeeder extends Seeder
             ],
             [
                 "berkas_key" => Str::random(10),
-                "nama" => "Surat Keterangan Kebenaran Berkas",
+                "nama" => "Surat pernyataan keabsahan Data Elektronik",
                 "is_required" => true,
                 "batas_ukuran" => 1024,
                 "nama_format" => "PDF",
