@@ -51,6 +51,8 @@ Route::middleware([
                     Route::post('/selesai-permohonan', [PermohonanController::class, 'selesaiPermohonan'])->name('selesai');
                     Route::post('/reset-permohonan', [PermohonanController::class, 'resetPermohonan'])->name('reset');
 
+                    Route::get('/table', [PermohonanController::class, 'table'])->name('table');
+
                     Route::prefix('berkas')
                         ->name('berkas.')
                         ->group(function () {

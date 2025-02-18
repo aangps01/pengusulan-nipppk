@@ -15,41 +15,68 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-lg-3">
-                        <label for="status" class="col-form-label">Status Validasi</label>
-                        <select id="status" class="form-select filter-select" data-column="5">
+                        <label class="col-form-label"
+                               for="status">Status Validasi</label>
+                        <select class="form-select filter-select"
+                                data-column="5"
+                                id="status">
                             <option value=""></option>
-                            <option value="1" class="text-sm">Pengajuan Baru</option>
-                            <option value="2" class="text-sm">Sedang Verifikasi</option>
-                            <option value="3" class="text-sm">Revisi</option>
-                            <option value="4" class="text-sm">Verifikasi Ulang</option>
-                            <option value="5" class="text-sm">Selesai</option>
-                            <option value="6" class="text-sm">Ditolak</option>
+                            <option class="text-sm"
+                                    value="1">Pengajuan Baru</option>
+                            <option class="text-sm"
+                                    value="2">Sedang Verifikasi</option>
+                            <option class="text-sm"
+                                    value="3">Revisi</option>
+                            <option class="text-sm"
+                                    value="4">Verifikasi Ulang</option>
+                            <option class="text-sm"
+                                    value="5">Selesai</option>
+                            <option class="text-sm"
+                                    value="6">Ditolak</option>
                         </select>
                     </div>
                     <div class="col-lg-3">
-                        <label for="tanggal_pengajuan" class="col-form-label">Tanggal Pengajuan</label>
-                        <input type="text" class="form-control filter-select" name="tanggal_pengajuan"
-                            id="tanggal_pengajuan" placeholder="Masukkan tanggal pengajuan" autocomplete="off">
+                        <label class="col-form-label"
+                               for="tanggal_pengajuan">Tanggal Pengajuan</label>
+                        <input autocomplete="off"
+                               class="form-control filter-select"
+                               id="tanggal_pengajuan"
+                               name="tanggal_pengajuan"
+                               placeholder="Masukkan tanggal pengajuan"
+                               type="text">
                     </div>
                     <div class="col-lg-3">
-                        <label for="tanggal_validasi" class="col-form-label">Tanggal Validasi</label>
-                        <input type="text" class="form-control filter-select" name="tanggal_validasi"
-                            id="tanggal_validasi" placeholder="Masukkan tanggal validasi" autocomplete="off">
+                        <label class="col-form-label"
+                               for="tanggal_validasi">Tanggal Validasi</label>
+                        <input autocomplete="off"
+                               class="form-control filter-select"
+                               id="tanggal_validasi"
+                               name="tanggal_validasi"
+                               placeholder="Masukkan tanggal validasi"
+                               type="text">
                     </div>
                     <div class="col-lg-3">
-                        <label for="jenis" class="col-form-label">Jenis CPPPK</label>
-                        <select id="jenis" class="form-select filter-select" data-column="5">
+                        <label class="col-form-label"
+                               for="jenis">Jenis CPPPK</label>
+                        <select class="form-select filter-select"
+                                data-column="5"
+                                id="jenis">
                             <option value=""></option>
-                            <option value="nakes" class="text-sm">Tenaga Kesehatan</option>
-                            <option value="guru" class="text-sm">Guru</option>
-                            <option value="teknis" class="text-sm">Teknis</option>
+                            <option class="text-sm"
+                                    value="nakes">Tenaga Kesehatan</option>
+                            <option class="text-sm"
+                                    value="guru">Guru</option>
+                            <option class="text-sm"
+                                    value="teknis">Teknis</option>
                         </select>
                     </div>
                 </div>
-                <button class="btn btn-primary d-block w-100 mt-3" onclick="resetSearch()">Reset Filter</button>
+                <button class="btn btn-primary d-block w-100 mt-3"
+                        onclick="resetSearch()">Reset Filter</button>
                 <hr>
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover" id="data-permohonan-table">
+                    <table class="table table-striped table-hover"
+                           id="data-permohonan-table">
                         <thead>
                             <tr>
                                 <th class="text-center">No</th>
@@ -58,10 +85,6 @@
                                 <th class="">Tanggal Pengusulan</th>
                                 <th class="">Tanggal Persetujuan</th>
                                 <th class="">Status</th>
-                                <th class="d-none">id</th>
-                                <th class="d-none">status</th>
-                                <th class="d-none">tanggal pengusulan timestamp</th>
-                                <th class="d-none">tanggal validasi timestamp</th>
                             </tr>
                         </thead>
                     </table>
@@ -137,7 +160,8 @@
             alwaysShowCalendars: true,
         });
         $('input[name="tanggal_pengajuan"]').on('apply.daterangepicker', function(ev, picker) {
-            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY')).trigger('change');
+            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'))
+                .trigger('change');
         });
         $('input[name="tanggal_pengajuan"]').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('').trigger('change');
@@ -160,7 +184,8 @@
             alwaysShowCalendars: true,
         });
         $('input[name="tanggal_validasi"]').on('apply.daterangepicker', function(ev, picker) {
-            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY')).trigger('change');
+            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'))
+                .trigger('change');
         });
         $('input[name="tanggal_validasi"]').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('').trigger('change');
@@ -168,12 +193,14 @@
     </script>
     <script>
         var table = $('#data-permohonan-table').DataTable({
+            processing: true,
+            serverSide: true,
             lengthMenu: [
                 [10, 25, 50, -1],
                 [10, 25, 50, 'All'],
             ],
             ajax: {
-                url: "{{ url()->current() }}",
+                url: "{{ route('admin.permohonan.table') }}",
                 data: function(d) {
                     d.status = $('#status').val();
                     d.tanggal_pengajuan = $('input[name="tanggal_pengajuan"]').val();
@@ -181,36 +208,40 @@
                     d.jenis = $('#jenis').val();
                 }
             },
-            dom: 'lBfrtip',
-            buttons: [{
-                extend: 'csvHtml5',
-                text: '<i class="isax isax-export-1 me-2"></i>Export Excel',
-                className: 'btn btn-primary',
-                exportOptions: {
-                    columns: [1]
-                },
-                action: function(e, dt, node, config) {
-                    // target blank
-                    window.open("{{ route('admin.permohonan.export') }}?status=" + $('#status').val() +
-                        "&tanggal_pengajuan=" + $('input[name="tanggal_pengajuan"]').val() +
-                        "&tanggal_validasi=" + $('input[name="tanggal_validasi"]').val()) +
-                        "&jenis=" + $('#jenis').val();
-                }
-            }],
             language: {
                 url: "{{ asset('assets/vendors/datatables-lang-id.json') }}"
             },
-            columnDefs: [{
-                targets: [6, 7, 8, 9],
-                visible: false,
-            }, {
-                targets: [6, 7],
-                className: 'text-center',
-            }, {
-                targets: [3, 4],
-                orderData: [8, 9],
-            }],
-            // creating row
+            columns: [{
+                    data: null,
+                    name: 'index',
+                    searchable: false,
+                    orderable: false,
+                    className: 'text-center',
+                    render: function(data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
+                {
+                    data: 'nik',
+                    name: 'nik'
+                },
+                {
+                    data: 'nama',
+                    name: 'nama'
+                },
+                {
+                    data: 'tanggal_pengajuan',
+                    name: 'tanggal_pengajuan'
+                },
+                {
+                    data: 'tanggal_validasi',
+                    name: 'tanggal_validasi'
+                },
+                {
+                    data: 'status',
+                    name: 'status'
+                },
+            ],
 
             createdRow: function(row, data, dataIndex) {
                 // set data active bg
@@ -219,8 +250,7 @@
                 }
                 $(row).addClass('clickable-row');
                 $(row).attr('onclick', 'window.location.href = "{{ url('admin/permohonan/verifikasi') }}/' +
-                    data[
-                        6] +
+                    data.id +
                     '"');
             },
         });
