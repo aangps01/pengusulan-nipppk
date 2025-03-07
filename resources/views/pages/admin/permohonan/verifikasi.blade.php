@@ -229,7 +229,8 @@
             let url = $(e).data('url');
 
             $('#modalValidasiBerkasLabel').html(nama);
-            $('#berkas').html('<iframe src="' + url + '" width="100%" height="500px"></iframe>');
+            // $('#berkas').html('<iframe src="' + url + '" width="100%" height="500px"></iframe>');
+            $('#berkas').html('<a href="' + url + '" target="_blank">Lihat File</a>');
             $('#download-berkas').attr('href', url);
             $('#detail_berkas_id').val(detail_id);
 
