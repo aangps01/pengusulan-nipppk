@@ -196,16 +196,16 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-auto flex-grow-1">
-                                            @if ($berkas->get('status') == 'Revisi')
+                                            {{-- @if ($berkas->get('status') == 'Revisi') --}}
                                                 <input type="file" accept="{{ $berkas->get('tipe_format') }}"
                                                     class="form-control upload-berkas"
                                                     name="berkas[{{ $berkas->get('berkas_key') }}]"
                                                     id="{{ $berkas->get('berkas_key') }}"
                                                     data-max-size="{{ $berkas->get('batas_ukuran') }}">
-                                            @else
+                                            {{-- @else
                                                 <input type="text" class="form-control"
                                                     value="{{ $berkas->get('berkas_filename') }}" disabled>
-                                            @endif
+                                            @endif --}}
                                         </div>
                                         <div class="col-lg-2 d-flex justify-content-end {{ !$berkas->get('berkas_filepath') ? 'd-none' : null }}"
                                             id="container-lihat-data-{{ $berkas->get('berkas_key') }}">
