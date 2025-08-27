@@ -213,13 +213,13 @@
                                                 onclick="lihatBerkas('{{ Storage::url($berkas->get('berkas_filepath')) }}')">
                                                 <i class="isax isax-search-normal me-2"></i> Lihat Data</button>
                                         </div>
-                                        @if ($berkas->get('status') == 'Revisi')
+                                        {{-- @if ($berkas->get('status') == 'Revisi') --}}
                                             <div class="col-lg-2 d-flex justify-content-end">
                                                 <button type="button" class="btn btn-primary btn-sm d-block w-100"
                                                     onclick="uploadBerkas('{{ $berkas->get('berkas_key') }}','{{ encrypt($berkas->get('id')) }}', '{{ $permohonan ? encrypt($permohonan->id) : '' }}', 'container-lihat-data-{{ $berkas->get('berkas_key') }}')">
                                                     <i class="isax isax-document-upload me-2"></i>Upload Berkas</button>
                                             </div>
-                                        @endif
+                                        {{-- @endif --}}
                                         <div class="col-lg-2 d-flex align-items-center justify-content-center">
                                             {!! $berkas->get('berkas_badge_status') !!}
                                         </div>
