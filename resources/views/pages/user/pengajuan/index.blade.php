@@ -174,7 +174,8 @@
                             @endif
                         @endforeach
                         {{-- CASE REVISI --}}
-                    @elseif($permohonan->status == 3)
+                    {{-- @elseif($permohonan->status == 3) --}}
+                    @else
                         @foreach ($berkas_persyaratan as $berkas)
                             @if ($berkas->get('is_active'))
                                 <div class="form-group mb-3">
@@ -234,7 +235,7 @@
                             @endif
                         @endforeach
                         {{-- CASE SEDANG VERIFIKASI ATAU VERIFIKASI ULANG --}}
-                    @else
+                    {{-- @else
                         @foreach ($berkas_persyaratan as $berkas)
                             @if ($berkas->get('is_active'))
                                 <div class="form-group mb-3">
@@ -257,7 +258,7 @@
                                     </div>
                                 </div>
                             @endif
-                        @endforeach
+                        @endforeach --}}
                     @endif
                 </div>
             </div>
